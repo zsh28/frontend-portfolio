@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+body{
+    background-color: #030b52;
+}
+
+.scroll-offset {
+    scroll-margin-top: 5rem; /* Adjust this value based on your navbar height */
+  }
+
+  .glowing-border {
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .glowing-border:hover {
+    box-shadow: 0 0 20px orange;
+  }
+
+  .backdrop-blur-md {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
