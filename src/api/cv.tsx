@@ -3,7 +3,7 @@ const fetchCv = async (): Promise<{ url: string; filename?: string } | string> =
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 60000); // 60 seconds timeout
 
-        const response = await fetch('https://portfolio-backend-xeby.onrender.com/cv/', {
+        const response = await fetch('/api/cvs/', {
             headers: {
                 Accept: 'application/json',
             },
@@ -16,16 +16,32 @@ const fetchCv = async (): Promise<{ url: string; filename?: string } | string> =
             throw new Error('Network response was not ok');
         }
 
-        const contentDisposition = response.headers.get('content-disposition');
-        const filename = contentDisposition?.split('filename=')[1]?.split(';')[0]?.trim();
+        const data = await response.json();
 
-        const blob = await response.blob();
+        // Assuming the first item in the array is the file you want to download
+        const fileInfo = data[0];
+        const fileUrl = fileInfo.file_path;
+        const filename = fileInfo.file_name;
+
+        // Fetch the file as a blob
+        const fileResponse = await fetch(fileUrl, {
+            headers: {
+                Accept: 'application/pdf',
+            },
+            signal: controller.signal,
+        });
+
+        if (!fileResponse.ok) {
+            throw new Error('Failed to download the file');
+        }
+
+        const blob = await fileResponse.blob();
         const url = window.URL.createObjectURL(blob);
 
         return { url, filename };
     } catch (error) {
         return (error as Error).message;
     }
-}
+};
 
 export default fetchCv;

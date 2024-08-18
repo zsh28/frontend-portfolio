@@ -20,15 +20,14 @@ const Header = () => {
     if (typeof cvData === "object" && cvData.url) {
       const a = document.createElement("a");
       a.href = cvData.url;
-      a.download = cvData.filename || "CV.pdf";
-      a.target = "_blank";
+      a.target = "_blank"; // Open in a new tab
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
     } else {
       alert("Failed to fetch CV");
     }
-  };
+};
 
   const handleDropdownToggle = () => {
     setDropdownVisible(!dropdownVisible);
