@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 interface Profile {
-  id: number;
+  _id: string;
   name: string;
   title: string;
   description: string;
@@ -33,8 +33,8 @@ const useAboutApi = () => {
 
         const contentType = response.headers.get('content-type');
         if (contentType && contentType.includes('application/json')) {
-          const json: Profile = await response.json(); // Fetching a single profile
-          setProfiles([json]); // Set the fetched profile as a single-item array
+          const json: Profile[] = await response.json(); // Fetching an array of profiles
+          setProfiles(json); // Set the fetched profiles
         } else {
           throw new Error('Received HTML instead of JSON');
         }

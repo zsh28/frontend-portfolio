@@ -25,7 +25,7 @@ const ExperienceItem: React.FC<ExperienceItemProps> = ({
   const displayDateRange = present ? `${dateRange.split(' - ')[0]} - Present` : dateRange;
 
   // Splitting the description into an array of lines
-  const descriptionLines = description.split('\r\n');
+  const descriptionLines = description.split('\n');
 
   return (
     <div className="mb-8 p-4 border border-orange-400 rounded-lg glowing-border">
@@ -39,11 +39,13 @@ const ExperienceItem: React.FC<ExperienceItemProps> = ({
       </div>
       <div className="text-lg text-gray-300 mb-2">{location}</div>
       <h2 className="text-xl text-gray-300 mb-2">{position}</h2>
-      {/* Rendering each line of the description separately */}
-      <div className="text-base text-gray-300 mb-4">
-        {descriptionLines.map((line, index) => (
-          <p key={index}>{line}</p>
-        ))}
+      <div className="flex items-start">
+        {/* Rendering each line of the description separately */}
+        <div className="text-base text-gray-300 mb-4 flex-1">
+          {descriptionLines.map((line, index) => (
+            <p key={index}>{line}</p>
+          ))}
+        </div>
       </div>
       <div className="flex flex-wrap space-x-2">
         {technologies.map((tech, index) => (

@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
 
 interface TechStack {
-  id: number;
+  _id: string;
   name: string;
 }
 
 interface Experience {
-  id: number;
+  _id: string;
   tech_stack: TechStack[];
+  technologies: string[];
   from_date: string;
   to_date: string;
   title: string;
@@ -18,7 +19,6 @@ interface Experience {
   url: string;
   github: string;
   present: boolean;
-  techstack: string[];
   daterange: string;
 }
 
@@ -48,12 +48,12 @@ const useExperienceApi = () => {
 
         const contentType = response.headers.get('content-type');
         if (contentType && contentType.includes('application/json')) {
-          const json: Experience[] = await response.json(); // Fetching an array of experiences
+          const json: Experience[] = await response.json();
           // Transform tech_stack to an array of strings
           const transformedExperiences = json.map((exp) => ({
             ...exp,
-            techstack: exp.tech_stack.map((tech) => tech.name),
-            daterange: `${exp.from_date} - ${exp.to_date}`,
+            technologies: exp.tech_stack.map((tech) => tech.name), // Transform to string[]
+            daterange: `${new Date(exp.from_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long' })} - ${exp.present ? 'Present' : new Date(exp.to_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}`,
           }));
           setExperiences(transformedExperiences);
         } else {

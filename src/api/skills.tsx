@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 interface Skill {
-  id: number;
+  _id: number;
   name: string;
 }
 

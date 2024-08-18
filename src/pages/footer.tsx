@@ -40,7 +40,7 @@ const Footer = () => {
                 <div className="flex space-x-4">
                     {contacts.map(contact => (
                         <a 
-                            key={contact.id} 
+                            key={contact._id} 
                             href={getContactHref(contact.title, contact.link)} 
                             target={contact.title.toLowerCase() !== 'email' ? "_blank" : undefined} 
                             rel="noopener noreferrer"

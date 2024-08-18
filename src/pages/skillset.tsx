@@ -18,7 +18,7 @@ const SkillSet = () => {
             <div className="flex flex-wrap gap-2">
               {skills.map(skill => (
                 <span
-                  key={skill.id}
+                  key={skill._id}
                   className="bg-indigo-900 border border-orange-400 text-orange-400 px-2 py-1 rounded"
                 >
                   {skill.name}

@@ -6,9 +6,9 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "https://portfolio-backend-xeby.onrender.com/",
+        target: "https://portfoliobackend-s3hr.onrender.com",
         changeOrigin: true,
-        secure: false,
+        secure: true,
       },
     },
   },

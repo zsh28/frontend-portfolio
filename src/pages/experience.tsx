@@ -6,10 +6,10 @@ const Experience = () => {
 
   if (loading) {
     return <p className="text-xl mb-4 text-gray-300">Loading...</p>;
-}
-if (error) {
+  }
+  if (error) {
     return <p className="text-xl mb-4 text-gray-300">Error: {error}</p>;
-}
+  }
 
   return (
     <>
@@ -20,16 +20,17 @@ if (error) {
           <h1 className="text-xl mb-4 text-gray-300">Experience</h1>
           {experiences.map((experience) => (
             <ExperienceItem
-              key={experience.id}
-              dateRange={experience.daterange}
-              company={experience.company}
-              position={experience.title}
-              description={experience.description}
-              technologies={experience.techstack}
-              location={experience.location}
-              url={experience.url}
-              present={experience.present}
-            />
+            key={experience._id}
+            dateRange={experience.daterange}
+            company={experience.company}
+            position={experience.title}
+            description={experience.description}
+            technologies={experience.technologies} // Now correctly passed as string[]
+            location={experience.location}
+            url={experience.url}
+            present={experience.present}
+          />
+          
           ))}
         </div>
       </section>

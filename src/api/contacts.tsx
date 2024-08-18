@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 interface Contact {
-    id: number;
+    _id: number;
     title: string;
     link: string;
 }

@@ -1,5 +1,4 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
-import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 
 const ContactForm = () => {
     const [formData, setFormData] = useState({
@@ -7,10 +6,8 @@ const ContactForm = () => {
         subject: '',
         email: '',
         message: '',
-        recaptcha: '', // This will be set dynamically
     });
 
-    const { executeRecaptcha } = useGoogleReCaptcha();
     const [loading, setLoading] = useState(false);
     const [responseMessage, setResponseMessage] = useState('');
     const [isError, setIsError] = useState(false);
@@ -26,19 +23,10 @@ const ContactForm = () => {
         e.preventDefault();
         setLoading(true);
 
-        if (!executeRecaptcha) {
-            setResponseMessage('Recaptcha not ready');
-            setIsError(true);
-            setLoading(false);
-            return;
-        }
-
         try {
-            const recaptchaToken = await executeRecaptcha('contact_form');
-
+            
             const payload = { 
                 ...formData, 
-                recaptcha: { token: recaptchaToken } // Adjust payload
             };
 
             const controller = new AbortController();
@@ -57,7 +45,7 @@ const ContactForm = () => {
                 const data = await response.json();
                 setResponseMessage(data.message);
                 setIsError(false);
-                setFormData({ name: '', subject: '', email: '', message: '', recaptcha: '' }); // Reset form
+                setFormData({ name: '', subject: '', email: '', message: '' }); // Reset form
             } else {
                 const errorData = await response.json();
                 console.error('Error data:', errorData); // Log error data

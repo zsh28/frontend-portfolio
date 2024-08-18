@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 interface Education {
-  id: number;
+  _id: number;
   school: string;
   degree: string;
   from_date: string;

@@ -35,8 +35,14 @@ const useProjectApi = () => {
 
                 const contentType = response.headers.get('content-type');
                 if (contentType && contentType.includes('application/json')) {
-                    const json: Project[] = await response.json(); // Fetching an array of projects
-                    setProjects(json);
+                    const json = await response.json();
+
+                    const projectsWithTechnologies = json.map((project: any) => ({
+                        ...project,
+                        technologies: project.tech_stack?.map((tech: any) => tech.name) || [], // Map tech_stack to technologies
+                    }));
+
+                    setProjects(projectsWithTechnologies);
                 } else {
                     throw new Error('Received HTML instead of JSON');
                 }

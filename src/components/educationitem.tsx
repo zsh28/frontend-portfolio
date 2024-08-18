@@ -5,27 +5,35 @@ interface EducationItemProps {
     school: string;
     degree: string;
     description: string;
+    present: boolean;
 }
 
 const EducationItem: React.FC<EducationItemProps> = ({
     dateRange,
     school,
     degree,
-    description
+    description,
+    present
 }) => {
+    const displayDateRange = present ? `${dateRange.split(' - ')[0]} - Present` : dateRange;
+
+    // Splitting the description into an array of lines
+    const descriptionLines = description.split('\n');
+
     return (
         <div className="mb-8 p-4 border border-orange-400 rounded-lg glowing-border">
             <div className="flex justify-between mb-2">
-                <span className="text-lg text-gray-300">{dateRange}</span>
+                <span className="text-lg text-gray-300">{displayDateRange}</span>
                 <span className="flex items-center text-lg text-gray-300">
                     {school}
                 </span>
             </div>
-            <div className='flex flex-wrap space-x-2'>
-                <h2 className="text-xl text-gray-300 mb-2">{degree}</h2>
-                <p className="text-base text-gray-300 mb-4 whitespace-pre-line">
-                    {description}
-                </p>
+            <h2 className="text-xl text-gray-300 mb-2">{degree}</h2>
+            {/* Rendering each line of the description separately */}
+            <div className="text-base text-gray-300 mb-4">
+                {descriptionLines.map((line, index) => (
+                    <p key={index}>{line}</p>
+                ))}
             </div>
         </div>
     );
