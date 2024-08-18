@@ -1,0 +1,13 @@
+[[redirects]]
+  from = "/api/*"
+  to = "https://portfoliobackend-s3hr.onrender.com/api/:splat"
+  status = 200
+  force = true
+  forceTimeout = 6000
+  [redirect.headers]
+    x-from = "Netlify"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
