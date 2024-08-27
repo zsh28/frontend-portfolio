@@ -18,16 +18,11 @@ const Header = () => {
   const openCvInNewTab = async () => {
     const cvData = await fetchCv();
     if (typeof cvData === "object" && cvData.url) {
-      const a = document.createElement("a");
-      a.href = cvData.url;
-      a.target = "_blank"; // Open in a new tab
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
+      window.open(cvData.url, "_blank"); // Open in a new tab
     } else {
       alert("Failed to fetch CV");
     }
-};
+  };
 
   const handleDropdownToggle = () => {
     setDropdownVisible(!dropdownVisible);
