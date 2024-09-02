@@ -20,8 +20,11 @@ const fetchCv = async (): Promise<{ url: string; filename?: string } | string> =
 
         // Assuming the first item in the array is the file you want to download
         const fileInfo = data[0];
-        const fileUrl = fileInfo.file_path;
+        const encodedUrl = fileInfo.encoded_file_path; // Assuming the URL is encoded in Base64
         const filename = fileInfo.file_name;
+
+        // Decode the Base64 URL
+        const fileUrl = atob(encodedUrl);
 
         // Fetch the file as a blob
         const fileResponse = await fetch(fileUrl, {
