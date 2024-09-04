@@ -28,7 +28,7 @@ const ContactForm = () => {
 
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 60000);
-            const response = await fetch('api/contactForms/', {
+            const response = await fetch('https://portfoliobackend-s3hr.onrender.com/api/contactForms/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
