@@ -24,14 +24,11 @@ const ContactForm = () => {
         setLoading(true);
 
         try {
-            
-            const payload = { 
-                ...formData, 
-            };
+            const payload = { ...formData };
 
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 60000);
-            const response = await fetch('https://portfolio-backend-xeby.onrender.com/api/contact-forms/', {
+            const response = await fetch('api/contactForms/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -42,8 +39,7 @@ const ContactForm = () => {
             clearTimeout(timeoutId);
 
             if (response.ok) {
-                const data = await response.json();
-                setResponseMessage(data.message);
+                setResponseMessage('Message sent successfully!'); // Set a generic success message
                 setIsError(false);
                 setFormData({ name: '', subject: '', email: '', message: '' }); // Reset form
             } else {
