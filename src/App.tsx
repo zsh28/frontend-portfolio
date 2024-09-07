@@ -6,19 +6,34 @@ import Education from './pages/education';
 import Projects from './pages/projects';
 import Contact from './pages/contact';
 import Footer from './pages/footer';
+import CvViewer from './pages/cvViewer'; // Import CvViewer
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './index.css';
+
 function App() {
   return (
-    <div className="min-h-screen">
-      <Header />
-      <About />
-      <SkillSet />
-      <Experience />
-      <Education />
-      <Projects />
-      <Contact />
-      <Footer />
-    </div>
+    <Router>
+      <Routes>
+        {/* Main page path */}
+        <Route
+          path="/"
+          element={
+            <div className="min-h-screen">
+              <Header />
+              <About />
+              <SkillSet />
+              <Experience />
+              <Education />
+              <Projects />
+              <Contact />
+              <Footer />
+            </div>
+          }
+        />
+        {/* CV Viewer as a separate path */}
+        <Route path="/cv-viewer" element={<CvViewer />} />
+      </Routes>
+    </Router>
   );
 }
 

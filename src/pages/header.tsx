@@ -1,15 +1,11 @@
 import { useState } from "react";
-import fetchCv from "../api/cv";
-import { Document, Page, pdfjs } from "react-pdf";
-import { toast, ToastContainer } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import {  ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-// Set workerSrc to point to the location of pdf.worker.js
-pdfjs.GlobalWorkerOptions.workerSrc = `/pdf.worker.js`;
 
 const Header = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
-  const [cvUrl, setCvUrl] = useState<string | null>(null); // Now it's the URL, not blob
+  const navigate = useNavigate(); // React Router hook for navigation
 
   // Smooth scroll to sections
   const scrollToSection = (id: string) => {
@@ -23,31 +19,9 @@ const Header = () => {
     }
   };
 
-  // Open CV in a modal using React PDF and show Toastify while loading
-  const openCvInViewer = async () => {
-    const loadingToastId = toast.loading("Loading CV...");
-
-    try {
-      const cvData = await fetchCv();
-      if (typeof cvData === "object" && cvData.url) {
-        setCvUrl(cvData.url); // Set the actual URL instead of blob
-        toast.update(loadingToastId, {
-          render: "CV Loaded!",
-          type: "success",
-          isLoading: false,
-          autoClose: 2000,
-        });
-      } else {
-        throw new Error("Failed to fetch CV");
-      }
-    } catch (error) {
-      toast.update(loadingToastId, {
-        render: "Failed to load CV",
-        type: "error",
-        isLoading: false,
-        autoClose: 3000,
-      });
-    }
+  // Navigate to the CV Viewer page
+  const openCvInViewer = () => {
+    navigate("/cv-viewer");
   };
 
   // Toggle the visibility of the dropdown menu (for mobile view)
@@ -113,7 +87,7 @@ const Header = () => {
               </button>
               <button
                 className="hover:bg-indigo-900 p-2 rounded-full transition text-lg md:text-base sm:text-sm text-gray-300"
-                onClick={openCvInViewer}
+                onClick={openCvInViewer} // Navigate to the CV Viewer page
               >
                 CV
               </button>
@@ -167,7 +141,7 @@ const Header = () => {
 
           {/* Dropdown menu for mobile */}
           {dropdownVisible && (
-            <div className="top-16 left-0 right-0 text-gray-300 ">
+            <div className="top-16 left-0 right-0 text-gray-300">
               <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 <button
                   className="block w-full px-3 py-2 rounded-full text-base font-medium hover:bg-indigo-900"
@@ -217,23 +191,6 @@ const Header = () => {
                 >
                   CV
                 </button>
-              </div>
-            </div>
-          )}
-
-          {/* PDF Viewer for CV */}
-          {cvUrl && (
-            <div className="cv-viewer-modal fixed inset-0 z-50 bg-black bg-opacity-75 flex justify-center items-center">
-              <div className="bg-white p-6 rounded-lg shadow-lg max-w-3xl w-full">
-                <Document
-                  file={cvUrl} // Now using the actual URL
-                  onLoadError={(error: Error) => {
-                    console.error("Error while loading PDF:", error);
-                    toast.error("Error while loading PDF");
-                  }}
-                >
-                  <Page pageNumber={1} />
-                </Document>
               </div>
             </div>
           )}
