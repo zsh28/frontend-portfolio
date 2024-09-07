@@ -18,12 +18,9 @@ const fetchCv = async (): Promise<{ url: string; filename?: string } | string> =
 
         const data = await response.json();
 
-        // Assuming the first item in the array is the file you want to download
         const fileInfo = data[0];
-        const fileUrl = fileInfo.file_path; // Use the provided direct URL
-        const filename = fileInfo.file_name;
+        const fileUrl = fileInfo.file_path;
 
-        // Fetch the file as a blob
         const fileResponse = await fetch(fileUrl, {
             headers: {
                 Accept: 'application/pdf',
@@ -38,7 +35,7 @@ const fetchCv = async (): Promise<{ url: string; filename?: string } | string> =
         const blob = await fileResponse.blob();
         const url = window.URL.createObjectURL(blob);
 
-        return { url, filename };
+        return { url, filename: fileInfo.file_name };
     } catch (error) {
         return (error as Error).message;
     }

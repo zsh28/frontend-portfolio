@@ -1,9 +1,12 @@
 import { useState } from "react";
 import fetchCv from "../api/cv";
+import { Document, Page } from 'react-pdf';
 
 const Header = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [cvBlobUrl, setCvBlobUrl] = useState<string | null>(null);
 
+  // Smooth scroll to sections
   const scrollToSection = (id: string) => {
     if (id === "top") {
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -15,82 +18,77 @@ const Header = () => {
     }
   };
 
-  const openCvInNewTab = async () => {
+  // Open CV in a modal using React PDF
+  const openCvInViewer = async () => {
     const cvData = await fetchCv();
     if (typeof cvData === "object" && cvData.url) {
-      window.open(cvData.url, "_blank"); // Open in a new tab
+      setCvBlobUrl(cvData.url); // Set the blob URL to render in the viewer
     } else {
       alert("Failed to fetch CV");
     }
   };
 
+  // Toggle the visibility of the dropdown menu (for mobile view)
   const handleDropdownToggle = () => {
     setDropdownVisible(!dropdownVisible);
-  };
-
-  const handleLinkClick = (id: string) => {
-    setDropdownVisible(false);
-    scrollToSection(id);
   };
 
   return (
     <header className="bg-transparent p-2 rounded-3xl mx-auto max-w-2xl mt-4 shadow-custom-all-around top-3 left-0 right-0 backdrop-blur-md sticky">
       <nav className="px-4 navbar">
         <div className="flex justify-between items-center">
-          <div
-            className={`md:flex space-x-4 ${
-              dropdownVisible ? "hidden" : "hidden md:flex"
-            }`}
-          >
+          <div className={`md:flex space-x-4 ${dropdownVisible ? "hidden" : "hidden md:flex"}`}>
             <button
               className="hover:bg-indigo-900 p-2 rounded-full transition text-lg md:text-base sm:text-sm text-gray-300"
-              onClick={() => handleLinkClick("top")}
+              onClick={() => scrollToSection("top")}
             >
               Home
             </button>
             <button
               className="hover:bg-indigo-900 p-2 rounded-full transition text-lg md:text-base sm:text-sm text-gray-300"
-              onClick={() => handleLinkClick("about")}
+              onClick={() => scrollToSection("about")}
             >
               About
             </button>
             <button
               className="hover:bg-indigo-900 p-2 rounded-full transition text-lg md:text-base sm:text-sm text-gray-300"
-              onClick={() => handleLinkClick("skillstechstack")}
+              onClick={() => scrollToSection("skillstechstack")}
             >
               Skills
             </button>
             <button
               className="hover:bg-indigo-900 p-2 rounded-full transition text-lg md:text-base sm:text-sm text-gray-300"
-              onClick={() => handleLinkClick("experience")}
+              onClick={() => scrollToSection("experience")}
             >
               Experience
             </button>
             <button
               className="hover:bg-indigo-900 p-2 rounded-full transition text-lg md:text-base sm:text-sm text-gray-300"
-              onClick={() => handleLinkClick("education")}
+              onClick={() => scrollToSection("education")}
             >
               Education
             </button>
             <button
               className="hover:bg-indigo-900 p-2 rounded-full transition text-lg md:text-base sm:text-sm text-gray-300"
-              onClick={() => handleLinkClick("projects")}
+              onClick={() => scrollToSection("projects")}
             >
               Projects
             </button>
             <button
               className="hover:bg-indigo-900 p-2 rounded-full transition text-lg md:text-base sm:text-sm text-gray-300"
-              onClick={() => handleLinkClick("contact")}
+              onClick={() => scrollToSection("contact")}
             >
               Contact
             </button>
             <button
               className="hover:bg-indigo-900 p-2 rounded-full transition text-lg md:text-base sm:text-sm text-gray-300"
-              onClick={openCvInNewTab}
+              onClick={openCvInViewer}
             >
               CV
             </button>
           </div>
+
+          {/* Mobile menu */}
           <div className="md:hidden w-full">
             <button
               onClick={handleDropdownToggle}
@@ -128,72 +126,79 @@ const Header = () => {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="2"
-                    d="M9 5l7 7-7 7"
+                    d="M9 5l7 7-7-7"
                   />
                 </svg>
               )}
             </button>
           </div>
         </div>
+
+        {/* Dropdown menu for mobile */}
         {dropdownVisible && (
           <div className="top-16 left-0 right-0 text-gray-300 ">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
               <button
                 className="block w-full px-3 py-2 rounded-full text-base font-medium hover:bg-indigo-900"
-                onClick={() => handleLinkClick("top")}
+                onClick={() => scrollToSection("top")}
               >
                 Home
               </button>
-              <a
-                className="block w-full px-3 py-2 rounded-full text-base font-medium hover:bg-indigo-900 text-center"
-                onClick={() => handleLinkClick("about")}
-                href="#about"
-              >
-                About
-              </a>
-              <a
-                className="block w-full px-3 py-2 rounded-full text-base font-medium hover:bg-indigo-900 text-center"
-                onClick={() => handleLinkClick("skillstechstack")}
-                href="#skillstechstack"
-              >
-                Skills
-              </a>
-              <a
-                className="block w-full px-3 py-2 rounded-full text-base font-medium hover:bg-indigo-900 text-center"
-                onClick={() => handleLinkClick("experience")}
-                href="#experience"
-              >
-                Experience
-              </a>
-              <a
-                className="block w-full px-3 py-2 rounded-full text-base font-medium hover:bg-indigo-900 text-center"
-                onClick={() => handleLinkClick("education")}
-                href="#education"
-              >
-                Education
-              </a>
-              <a
-                className="block w-full px-3 py-2 rounded-full text-base font-medium hover:bg-indigo-900 text-center"
-                onClick={() => handleLinkClick("projects")}
-                href="#projects"
-              >
-                Projects
-              </a>
-              <a
-                className="block w-full px-3 py-2 rounded-full text-base font-medium hover:bg-indigo-900 text-center"
-                onClick={() => handleLinkClick("contact")}
-                href="#contact"
-              >
-                Contact
-              </a>
-
               <button
                 className="block w-full px-3 py-2 rounded-full text-base font-medium hover:bg-indigo-900"
-                onClick={openCvInNewTab}
+                onClick={() => scrollToSection("about")}
+              >
+                About
+              </button>
+              <button
+                className="block w-full px-3 py-2 rounded-full text-base font-medium hover:bg-indigo-900"
+                onClick={() => scrollToSection("skillstechstack")}
+              >
+                Skills
+              </button>
+              <button
+                className="block w-full px-3 py-2 rounded-full text-base font-medium hover:bg-indigo-900"
+                onClick={() => scrollToSection("experience")}
+              >
+                Experience
+              </button>
+              <button
+                className="block w-full px-3 py-2 rounded-full text-base font-medium hover:bg-indigo-900"
+                onClick={() => scrollToSection("education")}
+              >
+                Education
+              </button>
+              <button
+                className="block w-full px-3 py-2 rounded-full text-base font-medium hover:bg-indigo-900"
+                onClick={() => scrollToSection("projects")}
+              >
+                Projects
+              </button>
+              <button
+                className="block w-full px-3 py-2 rounded-full text-base font-medium hover:bg-indigo-900"
+                onClick={() => scrollToSection("contact")}
+              >
+                Contact
+              </button>
+              <button
+                className="block w-full px-3 py-2 rounded-full text-base font-medium hover:bg-indigo-900"
+                onClick={openCvInViewer}
               >
                 CV
               </button>
             </div>
+          </div>
+        )}
+
+        {/* PDF Viewer for CV */}
+        {cvBlobUrl && (
+          <div className="cv-viewer-modal">
+            <Document
+              file={cvBlobUrl}
+              onLoadError={(error: Error) => console.error(error)} // Typed error
+            >
+              <Page pageNumber={1} />
+            </Document>
           </div>
         )}
       </nav>
