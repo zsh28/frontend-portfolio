@@ -9,7 +9,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = `/pdf.worker.js`;
 
 const Header = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
-  const [cvBlobUrl, setCvBlobUrl] = useState<string | null>(null);
+  const [cvUrl, setCvUrl] = useState<string | null>(null); // Now it's the URL, not blob
 
   // Smooth scroll to sections
   const scrollToSection = (id: string) => {
@@ -30,7 +30,7 @@ const Header = () => {
     try {
       const cvData = await fetchCv();
       if (typeof cvData === "object" && cvData.url) {
-        setCvBlobUrl(cvData.url); // Set the blob URL to render in the viewer
+        setCvUrl(cvData.url); // Set the actual URL instead of blob
         toast.update(loadingToastId, {
           render: "CV Loaded!",
           type: "success",
@@ -222,17 +222,19 @@ const Header = () => {
           )}
 
           {/* PDF Viewer for CV */}
-          {cvBlobUrl && (
-            <div className="cv-viewer-modal">
-              <Document
-                file={cvBlobUrl}
-                onLoadError={(error: Error) => {
-                  console.error("Error while loading PDF:", error);
-                  toast.error("Error while loading PDF");
-                }}
-              >
-                <Page pageNumber={1} />
-              </Document>
+          {cvUrl && (
+            <div className="cv-viewer-modal fixed inset-0 z-50 bg-black bg-opacity-75 flex justify-center items-center">
+              <div className="bg-white p-6 rounded-lg shadow-lg max-w-3xl w-full">
+                <Document
+                  file={cvUrl} // Now using the actual URL
+                  onLoadError={(error: Error) => {
+                    console.error("Error while loading PDF:", error);
+                    toast.error("Error while loading PDF");
+                  }}
+                >
+                  <Page pageNumber={1} />
+                </Document>
+              </div>
             </div>
           )}
         </nav>
