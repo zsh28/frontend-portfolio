@@ -15,7 +15,7 @@
     "@tsparticles/react": "^3.0.0",
     "@vitejs/plugin-react-swc": "^3.7.0",
     "dotenv": "^16.4.5",
-    "pdfjs-dist": "^3.11.174",
+    "pdfjs-dist": "^4.4.168",
     "postcss-apply": "^0.12.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
