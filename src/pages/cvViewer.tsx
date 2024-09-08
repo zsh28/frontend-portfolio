@@ -1,11 +1,8 @@
 import { useState, useEffect } from "react";
-import { Document, Page, pdfjs } from "react-pdf";
+import { Document, Page } from "react-pdf";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import fetchCv from "../api/cv";
-
-// Set workerSrc to point to the location of pdf.worker.js
-pdfjs.GlobalWorkerOptions.workerSrc = `/pdf.worker.js`;
 
 const CvViewer = () => {
   const [cvUrl, setCvUrl] = useState<string | null>(null);
