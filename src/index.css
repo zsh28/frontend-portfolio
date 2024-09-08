@@ -23,3 +23,11 @@ body{
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
   }
+
+.rpv-core__minimal-button {
+   background-color: white;
+  }
+
+  .rpv-core__minimal-button:hover {
+    background-color: lightgray !important;
+   }

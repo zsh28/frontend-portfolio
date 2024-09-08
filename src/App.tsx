@@ -6,9 +6,10 @@ import Education from './pages/education';
 import Projects from './pages/projects';
 import Contact from './pages/contact';
 import Footer from './pages/footer';
-import CvViewer from './pages/cvViewer'; // Import CvViewer
+import CvViewerLayout from './pages/cvViewerLayout'; // Import the layout for CV Viewer
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './index.css';
+
 
 function App() {
   return (
@@ -30,8 +31,8 @@ function App() {
             </div>
           }
         />
-        {/* CV Viewer as a separate path */}
-        <Route path="/cv-viewer" element={<CvViewer />} />
+        {/* CV Viewer as a separate path with header and footer */}
+        <Route path="/cv-viewer" element={<CvViewerLayout />} />
       </Routes>
     </Router>
   );
