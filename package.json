@@ -10,7 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@react-pdf-viewer/core": "^3.12.0",
     "@tsparticles/engine": "^3.4.0",
     "@tsparticles/react": "^3.0.0",
     "@vitejs/plugin-react-swc": "^3.7.0",
@@ -20,7 +19,6 @@
     "react-dom": "^18.2.0",
     "react-icons": "^5.2.1",
     "react-pdf": "^9.1.0",
-    "pdfjs-dist": "^4.5.136",
     "react-router-dom": "^6.26.1",
     "react-toastify": "^10.0.5",
     "react-type-animation": "^3.2.0"
@@ -30,6 +28,7 @@
     "@types/node": "^20.14.2",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
+    "@types/react-pdf": "^7.0.0",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.2.0",
     "@vitejs/plugin-react": "^4.2.1",
