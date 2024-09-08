@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import fetchCv from "../api/cv"; // Assuming this is to fetch CV data
 
 const Header = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -30,10 +29,22 @@ const Header = () => {
   };
 
   const handleLinkClick = (id: string) => {
+    if (location.pathname !== "/") {
+      // Navigate back to the main page before scrolling
+      navigate("/", { replace: true });
+      
+      // Add a slight delay before scrolling to ensure the page has loaded
+      setTimeout(() => {
+        scrollToSection(id);
+      }, 300);
+    } else {
+      // Scroll directly if already on the main page
+      scrollToSection(id);
+    }
+  
     setDropdownVisible(false);
-    scrollToSection(id);
   };
-
+  
   return (
     <header className="bg-transparent p-2 rounded-3xl mx-auto max-w-2xl mt-4 shadow-custom-all-around top-0 left-0 right-0 backdrop-blur-md sticky z-50">
       <nav className="px-4 navbar">

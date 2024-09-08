@@ -11,7 +11,7 @@ const CvViewer = () => {
 
   // Initialize the toolbar plugin
   const toolbarPluginInstance = toolbarPlugin();
-  const { Toolbar } = toolbarPluginInstance; // Extract the Toolbar component
+  const { Toolbar } = toolbarPluginInstance;
 
   useEffect(() => {
     const loadCv = async () => {
@@ -59,20 +59,19 @@ const CvViewer = () => {
               )}
             </Toolbar>
           </div>
-
           {/* PDF Viewer */}
           <div className="pdf-viewer" style={{ borderRadius: "10px", height: "calc(100vh - 100px)", width: "90%", margin: "0 auto", display: "flex", justifyContent: "center", alignItems: "center" }}>
             <Worker workerUrl={`https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js`}>
               <Viewer
                 fileUrl={cvUrl}
-                plugins={[toolbarPluginInstance]}
+                plugins={[toolbarPluginInstance as any]}
                 defaultScale={SpecialZoomLevel.PageWidth} // Fit the PDF to the width of the screen
               />
             </Worker>
           </div>
         </div>
       ) : (
-        <p>No CV available</p>
+        <p></p>
       )}
     </div>
   );
