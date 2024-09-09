@@ -47,7 +47,11 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-transparent p-2 rounded-3xl mx-auto max-w-2xl mt-4 shadow-custom-all-around top-0 left-0 right-0 backdrop-blur-md sticky z-50">
+    <header
+      className={`p-2 rounded-3xl mx-auto max-w-2xl mt-4 shadow-custom-all-around top-0 left-0 right-0 backdrop-blur-md sticky z-50 ${
+        location.pathname === "/cv-viewer" ? "bg-[rgba(3,11,82,0.85)]" : "bg-transparent"
+      }`}
+    >
       <nav className="px-4 navbar">
         <div className="flex justify-between items-center">
           {/* Navigation buttons for desktop */}
