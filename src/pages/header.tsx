@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { IoIosArrowForward, IoIosArrowDown } from "react-icons/io"; // Importing both icons
 
 const Header = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -32,7 +33,7 @@ const Header = () => {
     if (location.pathname !== "/") {
       // Navigate back to the main page before scrolling
       navigate("/", { replace: true });
-      
+
       // Add a slight delay before scrolling to ensure the page has loaded
       setTimeout(() => {
         scrollToSection(id);
@@ -41,10 +42,10 @@ const Header = () => {
       // Scroll directly if already on the main page
       scrollToSection(id);
     }
-  
+
     setDropdownVisible(false);
   };
-  
+
   return (
     <header className="bg-transparent p-2 rounded-3xl mx-auto max-w-2xl mt-4 shadow-custom-all-around top-0 left-0 right-0 backdrop-blur-md sticky z-50">
       <nav className="px-4 navbar">
@@ -106,42 +107,14 @@ const Header = () => {
             <button
               onClick={handleDropdownToggle}
               type="button"
-              className="w-full bg-slate-200 bg-transparent inline-flex items-center justify-center p-2 rounded-lg text-gray-300"
+              className="menu-button w-full bg-slate-200 bg-transparent inline-flex items-center justify-center p-2 rounded-lg text-gray-300"
             >
               <span className="sr-only">Open main menu</span>
               Menu
               {dropdownVisible ? (
-                <svg
-                  className="ml-2 h-6 w-6"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
+                <IoIosArrowDown className="ml-2 h-5 w-5" /> // Show IoIosArrowDown when menu is opened
               ) : (
-                <svg
-                  className="ml-2 h-6 w-6"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M9 5l7 7-7-7"
-                  />
-                </svg>
+                <IoIosArrowForward className="ml-2 h-5 w-5" /> // Show IoIosArrowForward when menu is closed
               )}
             </button>
           </div>
