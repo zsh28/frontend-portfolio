@@ -1,6 +1,6 @@
 [[redirects]]
   from = "/api/*"
-  to = "https://portfoliobackend-s3hr.onrender.com/api/:splat"
+  to = "https://portfoliobackend-kz48.onrender.com/api/:splat"
   status = 200
   force = true
   forceTimeout = 6000
